@@ -1,0 +1,47 @@
+user_input,response
+TC-001: Testing that BIM Resources' elements are working,P1
+TC-002: Checking valid Submission Validation with Pool And Spa,P1
+TC-003: Heating and Cooling Page - Residential: Text contains the header,P2
+TC-004: Broken Image Test,P1
+TC-005: Navigate to the Commercial Product Sizing Page on the Rheem Website,P2
+TC006: Verifying Privacy Policy Link,P3
+TC-007: Verify Page URL,P3
+TC-008: Validate Image Links,P3
+TC-009: Verify Tankless Heater Link,P2
+TC-010: Verify Page Navigation,P1
+TC-011: Broken Images Test,P1
+TC-012: Validate Intro Text,P2
+TC-013: Verify Contact Us Button,P1
+TC-014: Verify the title of the Water Heating Commercial page,P2
+TC-015: Check the left panel products name Water Heating Commercial page,P1
+TC-016: Verify the ribbon headers on the Water Heating Commercial page,P3
+TC-017: Test correct page is opened,P2
+TC-018: Tankless Water Heaters detail viewing,P2
+TC-019: Test hyperlinked text 'Gas Water Heaters' is clickable,P2
+TC-020: Testing the Clickability of Sub-Menus under 'Water Heating' Menu,P3
+TC-021: Test Rheem Residential Water Heaters header is visible,P3
+TC-022: Verify Main Title on Commercial Project Sizing Page,P3
+TC-026: Verify Click Action on Commercial Project Sizing Page,P3
+TC-027: Verify Revit Files & Install Diagrams Panel Navigation,P3
+TC-028: Verify Multiple BIM Resources Panel Navigations,P3
+TC-032: Navigate to the Commercial Resource Center Page,P3
+TC-033: Verify Commercial Resource Center Header,P2
+TC-034: Broken Image Test on Commercial Resource Center Page,P3
+TC-036: Verify Commercial Resource Center Header,P2
+TC-037: Broken Image Testing on Commercial Resource Center Page,P3
+TC-038: Navigate to the Featured Innovations Page,P3
+TC-039: Broken Image Test on Featured Innovations Page,P3
+TC-040: Verify Product Listing on Featured Innovations Page,P3
+TC-041: Verify Motto Title on Featured Innovations Page,P2
+TC-042: Navigate to the Commercial Featured Innovations Page,P3
+TC-043: Verify Title of the Commercial Featured Innovations Page,P2
+TC-044: Verify Ribbon Headers on the Commercial Featured Innovations Page,P2
+TC-045: Verify Image Links and Sizes on the Commercial Featured Innovations Page,P3
+TC-046: Verify Texts and Titles on the Commercial Featured Innovations Page,P2
+TC-047: Test Rheem Residential Water Heaters text is visible and true,P3
+TC-048: Test Explore Products panel's products and more button are visible,P2
+TC-049: Testing that the correct page is opened,P3
+TC-050: Main title test of Warranties Page,P3
+"TC-051: Testing Register Your Product, Your Warranty, and Need Warranty Service Panels' Headers",P3
+"TC-052: Testing that ""Where's my serial number"" hypertext",P2
+"TC-053: Testing that ""Register Your Product"" Panel's Buttons Lead to Correct Pages",P3

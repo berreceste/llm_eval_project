@@ -1,0 +1,80 @@
+user_input,retrieved_contexts,reference_contexts,response,reference,context_recall,non_llm_context_recall
+"""TC-001: Testing that BIM
+ Resources' elements are 
+working""",[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,"User should be redirected to the
+ “BIM Resources page” upon clicking
+ the BIM Resources button.",0.0,
+"TC-002: Checking valid
+ Submission Validation
+ with Pool And Spa",[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,"The user should be able to fill out all required fields with valid data and successfully submit the form. A confirmation or success message should appear, or the user should be redirected to a confirmation page (depending on the application’s design).",0.0,
+"TC-003: Heating and 
+Cooling Page - Residential
+: Text contains the header",[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P2,"The page should display the correct header text ( “Rheem Residential Heating and Cooling Products.”), confirming successful navigation.",0.0,
+TC-004: Broken Image Test,['Go to rheem.com\nClick on the Products button \nClick on the Commercial button\nClick on the Project Sizing button\nVerify all images on the page are valid (no broken links or missing images)'],"['All images must be properly loaded to ensure a functional and professional UI.', 'Broken images disrupt user experience and may indicate server or resource issues.']",P2,All images on the Product Sizing page should load correctly without any broken or missing images,1.0,0.0
+TC-005 : Navigate to the Commercial Product Sizing Page on the Rheem Website,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P2 ,The user is successfully directed to the Commercial Product Sizing page. The click action on the “Product Sizing” link should be functional and responsive.,0.0,
+TC006: Verifying Privacy Policy Link,[],"['Image links should be valid and direct to the correct resources.', 'Functional media elements enhance trust and usability.']",P1,"The Privacy Notice page opens
+The URL of the page should be https://www.rheem.com/legal/
+The page should display the heading ""Privacy Notice"" and the subheading ""Rheem Manufacturing Company Privacy Notice""",0.0,
+TC-007:Verify Page URL,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P3,"URL should be
+ ""https://www.rheem.com/
+products/commercial/heating-and-
+cooling/""",0.0,
+TC-008:Validate Image Links	,[],"['Image links should be valid and direct to the correct resources.', 'Functional media elements enhance trust and usability.']",P3,All images should have valid links and correct sizes,0.0,
+TC-009:Verify Tankless Heater Link	,[],"['Image links should be valid and direct to the correct resources.', 'Functional media elements enhance trust and usability.']",P1,Link should be visible and redirect correctly,0.0,
+TC-010:Verify Page Navigation	,[],"['Correct navigation ensures users reach the intended content without confusion.', 'This test validates that routing logic is implemented correctly in the application.']",P1,User should be redirected to Water Heating Page,0.0,
+TC-011:Broken Images Test	,[],"['All images must be properly loaded to ensure a functional and professional UI.', 'Broken images disrupt user experience and may indicate server or resource issues.']",P2,All images should be valid (not broken),0.0,
+TC-012:Validate Intro Text	,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P2,Intro text should be correct,0.0,
+TC-013:Verify Contact Us Button	,[],"['Successful form submissions are crucial for capturing user data accurately.', 'Validation of input fields ensures that the user experience is smooth and error-free.']",P1,User should be redirected to the Contact Rheem page,0.0,
+ TC-014: Verify the title of the Water Heating Commercial page,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P1,The title of the Water Heating Commercial page should be displayed correctly.,0.0,
+TC-015: Check the left panel products name Water Heating Commercial page,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,All product names in the left panel should be correctly listed and match the expected values.,0.0,
+TC-016: Verify the ribbon headers on the Water Heating Commercial page,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P2 ,All ribbon headers should be displayed correctly and contain the expected text.,0.0,
+TC-017: Test correct page is opened,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,The user should be successfully redirected to the Water Heating page.,0.0,
+TC-018: Tankless Water Heaters detail viewing,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P2 ,The user should see the detailed page of Tankless Water Heaters.,0.0,
+TC-019: Test hyperlinked text 'Gas Water Heaters' is clickable,[],"['Image links should be valid and direct to the correct resources.', 'Functional media elements enhance trust and usability.']",P2 ,The user should be successfully redirected to the Gas Water Heaters page.,0.0,
+TC-020: Testing the Clickability of Sub-Menus under 'Water Heating' Menu,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,All sub-menus under 'Water Heating' should be clickable and functional.,0.0,
+TC-021: Test Rheem Residential Water Heaters header is visible,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P2 ,"The Rheem Residential Water
+ Heaters header should be visible.",0.0,
+TC-022: Verify Main Title on Commercial Project Sizing Page,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P2 ,The main title should be displayed correctly on the page.,0.0,
+TC-026: Verify Click Action on Commercial Project Sizing Page,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,Click action should be successfully performed.,0.0,
+TC-027: Verify Revit Files & Install Diagrams Panel Navigation,[],"['Correct navigation ensures users reach the intended content without confusion.', 'This test validates that routing logic is implemented correctly in the application.']",P1,User should be redirected to the Revit Files page.,0.0,
+TC-028: Verify Multiple BIM Resources Panel Navigations,[],"['Correct navigation ensures users reach the intended content without confusion.', 'This test validates that routing logic is implemented correctly in the application.']",P2 ,User should be redirected to the BIM Resources page upon multiple clicks.,0.0,
+TC-032: Navigate to the Commercial Resource Center Page,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P3,User should be redirected to the Commercial Resource Center page.,0.0,
+TC-033: Verify Commercial Resource Center Header,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P2 ,The Commercial Resource Center header should be visible on the page.,0.0,
+TC-034: Broken Image Test on Commercial Resource Center Page,[],"['All images must be properly loaded to ensure a functional and professional UI.', 'Broken images disrupt user experience and may indicate server or resource issues.']",P2 ,All images should be valid and properly displayed on the page.,0.0,
+TC-036: Verify Commercial Resource Center Header,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P1,The Commercial Resource Center header should be visible on the page.,0.0,
+TC-037: Broken Image Testing on Commercial Resource Center Page,[],"['All images must be properly loaded to ensure a functional and professional UI.', 'Broken images disrupt user experience and may indicate server or resource issues.']",P2 ,All images should be properly loaded and displayed.,0.0,
+TC-038: Navigate to the Featured Innovations Page,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,User should be redirected to the Featured Innovations Page.,0.0,
+TC-039: Broken Image Test on Featured Innovations Page,[],"['All images must be properly loaded to ensure a functional and professional UI.', 'Broken images disrupt user experience and may indicate server or resource issues.']",P2 ,All images should be properly loaded and displayed.,0.0,
+TC-040: Verify Product Listing on Featured Innovations Page,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,All expected products should be displayed correctly on the page.,0.0,
+TC-041: Verify Motto Title on Featured Innovations Page,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P3,The motto title should be displayed correctly on the page.,0.0,
+TC-042: Navigate to the Commercial Featured Innovations Page,[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P2 ,User should be redirected to the Commercial Featured Innovations Page.,0.0,
+TC-043: Verify Title of the Commercial Featured Innovations Page,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P2 ,The title should be displayed correctly on the page.,0.0,
+TC-044: Verify Ribbon Headers on the Commercial Featured Innovations Page,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P3,Ribbon headers should be correctly displayed with proper texts.,0.0,
+TC-045: Verify Image Links and Sizes on the Commercial Featured Innovations Page,[],"['Image links should be valid and direct to the correct resources.', 'Functional media elements enhance trust and usability.']",P2 ,"All image links should be valid, and images should have correct sizes.",0.0,
+TC-046: Verify Texts and Titles on the Commercial Featured Innovations Page,[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P1,"All texts and titles should be correctly displayed, containing appropriate trademarks.",0.0,
+"TC-047: Test Rheem
+ Residential Water
+ Heaters text is 
+visible and true",[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P2 ,"The Rheem Residential Water
+ Heaters text should be
+ correctly displayed.",0.0,
+"TC-048: Test Explore 
+Products panel's products
+and more button are visible",[],"['Buttons should perform their intended actions reliably.', 'Broken or misrouted buttons degrade user experience and usability.']",P2 ,"The 'Explore Products' panel 
+should show the expected
+ products and the more 
+button should work.",0.0,
+"TC-049: Testing
+ that the correct 
+page is opened",[],"['This test validates a key part of the user interface or functionality.', 'It ensures that the tested element behaves as expected under defined conditions.']",P1,"The user should be
+successfully redirected
+to the commercial resource
+ center page.",0.0,
+"TC-050: Main title
+test of Warranties Page",[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P3,"The main title of the page should be
+ correct and displayed properly.",0.0,
+"TC-051: Testing 
+Register Your
+ Product, Your Warranty, and Need Warranty Service Panels' Headers",[],"['Headers and titles provide structure and orientation within a webpage.', 'Correct titles help users understand the context of the page immediately.']",P3,"The headers of the ""Register Your Product"", ""Your Warranty"", and ""Need Warranty Service"" panels should be correct.",0.0,
+"TC-052: Testing that ""Where's my serial number"" hypertext",[],"['Warranty pages must provide accurate redirection to registration or verification forms.', 'Users rely on these links to maintain their product support and validity.']",P1,"The ""Where's my serial number"" hypertext should open the correct pop-up.",0.0,
+"TC-053: Testing that ""Register Your Product"" Panel's Buttons Lead to Correct Pages",[],"['Buttons should perform their intended actions reliably.', 'Broken or misrouted buttons degrade user experience and usability.']",P1,Clicking on each button should correctly redirect to its respective page.,0.0,
