@@ -10,13 +10,13 @@ Bu proje, Retrieval Augmented Generation (RAG) sistemlerinin ve dil modeli yanı
 │   ├── raw/                     # Ham veri setleri
 │   │   ├── ragas_ready_dataset_v2.csv # Değerlendirme için kullanılan ana veri setlerinden biri
 │   │   ├── ragas_ready_dataset_v4.csv # Değerlendirme için kullanılan ana veri setlerinden biri
-│   │   └── test_cases.csv           # evaulate.py tarafından kullanılan test case'leri
-│   └── processed/               # Script'ler tarafından üretilen sonuç CSV dosyaları ve işlenmiş veri setleri
+│   │   ├── test_cases.csv           # evaulate.py tarafından kullanılan test case'leri
+│   │   └── ragas_ready_dataset_with_responses_UPDATED.csv # Context Precision değerlendirmesi için kullanılan güncel veri seti
+│   └── processed/               # Script'ler tarafından üretilen bazı sonuç CSV dosyaları ve işlenmiş veri setleri
 │       ├── ragas_ready_dataset_v6.csv       # ContextEntityRecall.py tarafından üretilen işlenmiş veri
 │       ├── noise_relevancy_faithfulness_results.csv # EvaluateNoiseFaithRelevancy.py sonuçları
 │       ├── context_entity_recall_results.csv      # ContextEntityRecall .py sonuçları
 │       ├── context_recall_results.csv             # evaulatecontextrecall.py sonuçları
-│       ├── context_precision_results.csv          # evaulatecontextprecision.py sonuçları
 │       └── evaluation_results.csv                 # evulaterag.py sonuçları
 ├── src/
 │   └── evaluation/
@@ -26,7 +26,14 @@ Bu proje, Retrieval Augmented Generation (RAG) sistemlerinin ve dil modeli yanı
 │       ├── evaulatecontextprecision.py
 │       ├── evulaterag.py
 │       └── evaulate.py
+├── context_precision_normal.csv     # evaulatecontextprecision.py normal response sonuçları
+├── context_precision_noexec.csv     # evaulatecontextprecision.py no_exec response sonuçları
+├── context_precision_noseverity.csv # evaulatecontextprecision.py no_severity response sonuçları
+├── priority_eval_normal.csv         # evaulate.py normal response sonuçları
+├── priority_eval_noexec.csv         # evaulate.py no_execution_time_response sonuçları
+├── priority_eval_noseverity.csv     # evaulate.py no_severity_response sonuçları
 ├── .gitignore
+└── README.md
 ```
 
 ## Proje Akış Şeması
@@ -36,8 +43,8 @@ Aşağıda projenin genel veri ve işlem akışını gösteren bir diyagram bulu
 ```mermaid
 graph TD
     A[data/raw/ragas_ready_dataset_v2.csv] --> B1[EvaluateNoiseFaithRelevancy.py]
-    A --> B4[evaulatecontextprecision.py]
-    A --> B5[evulaterag.py]
+    A_UPDATED[data/raw/ragas_ready_dataset_with_responses_UPDATED.csv] --> B4[evaulatecontextprecision.py]
+    A[data/raw/ragas_ready_dataset_v2.csv] --> B5[evulaterag.py]
 
     C[data/raw/ragas_ready_dataset_v4.csv] --> B2[ContextEntityRecall .py]
     C --> B3[evaulatecontextrecall.py]
@@ -49,14 +56,15 @@ graph TD
     B1 --> R1[data/processed/noise_relevancy_faithfulness_results.csv]
     B2 --> R2[data/processed/context_entity_recall_results.csv]
     B3 --> R3[data/processed/context_recall_results.csv]
-    B4 --> R4[data/processed/context_precision_results.csv]
+    B4 --> R4[context_precision_*.csv (Proje Kök Dizini)]
     B5 --> R5[data/processed/evaluation_results.csv]
-    B6 -.-> R6[Konsol Çıktısı (DataFrame)]
+    B6 --> R6[priority_eval_*.csv (Proje Kök Dizini)]
 
     subgraph "Ham Veri Setleri (data/raw)"
         A
         C
         E
+        A_UPDATED
     end
 
     subgraph "Değerlendirme Script'leri (src/evaluation)"
@@ -68,18 +76,20 @@ graph TD
         B6
     end
 
-    subgraph "Sonuç Dosyaları / Çıktılar (data/processed ve Konsol)"
+    subgraph "Sonuç Dosyaları / Çıktılar"
         R1
         R2
         R3
         R4
         R5
         R6
+        D
     end
 
     style A fill:#D5F5E3,stroke:#2ECC71,stroke-width:2px
     style C fill:#D5F5E3,stroke:#2ECC71,stroke-width:2px
     style E fill:#D5F5E3,stroke:#2ECC71,stroke-width:2px
+    style A_UPDATED fill:#D5F5E3,stroke:#2ECC71,stroke-width:2px
     style D fill:#EBF5FB,stroke:#3498DB,stroke-width:2px
 
     style B1 fill:#FCF3CF,stroke:#F1C40F,stroke-width:2px
@@ -95,17 +105,18 @@ graph TD
     style R4 fill:#FDEDEC,stroke:#E74C3C,stroke-width:2px
     style R5 fill:#FDEDEC,stroke:#E74C3C,stroke-width:2px
     style R6 fill:#FDEDEC,stroke:#E74C3C,stroke-width:2px
+
 ```
-**Not:** `ContextEntityRecall .py` script'i, `data/raw/ragas_ready_dataset_v4.csv`'yi işleyerek `data/processed/ragas_ready_dataset_v6.csv` adlı bir ara işlenmiş veri dosyası üretir. Script, **bu işlenmiş veriyi kullanarak** `ContextEntityRecall` metriğini değerlendirir ve sonuçlarını `data/processed/context_entity_recall_results.csv` dosyasına yazar. Şemada, `data/processed/ragas_ready_dataset_v6.csv`'nin üretimi ve `context_entity_recall_results.csv`'nin bu işlenmiş veriden (dolaylı olarak `data/raw/ragas_ready_dataset_v4.csv`'den) türetildiği gösterilmiştir.
+**Not:** `ContextEntityRecall .py` script'i, `data/raw/ragas_ready_dataset_v4.csv`'yi işleyerek `data/processed/ragas_ready_dataset_v6.csv` adlı bir ara işlenmiş veri dosyası üretir. Script, **bu işlenmiş veriyi kullanarak** `ContextEntityRecall` metriğini değerlendirir ve sonuçlarını `data/processed/context_entity_recall_results.csv` dosyasına yazar. Şemada, `data/processed/ragas_ready_dataset_v6.csv`'nin üretimi ve `context_entity_recall_results.csv`'nin bu işlenmiş veriden (dolaylı olarak `data/raw/ragas_ready_dataset_v4.csv`'den) türetildiği gösterilmiştir. `evaulatecontextprecision.py` ve `evaulate.py` scriptleri sonuç dosyalarını projenin kök dizinine kaydeder.
 
 ## Kullanılan Teknolojiler
 
 *   Python 3.x
 *   Pandas: Veri işleme ve CSV yönetimi için.
 *   Ragas: RAG değerlendirme metrikleri için ana kütüphane.
-*   Langchain & Langchain-OpenAI: Dil modelleri (özellikle OpenAI GPT-4o) ile etkileşim için.
+*   Langchain & Langchain-OpenAI: Dil modelleri (özellikle OpenAI GPT modelleri) ile etkileşim için.
 *   Dotenv: Ortam değişkenlerini yönetmek için (API anahtarları vb.).
-*   Langfuse: LLM çağrılarının takibi için (bazı scriptlerde entegre).
+*   Langfuse: LLM çağrılarının takibi ve gözlemlenebilirliği için entegre edilmiştir.
 *   Datasets (Hugging Face): Veri setlerini yönetmek için (evaulate.py'de).
 
 ## Değerlendirme Script'leri ve Metrikler
@@ -177,19 +188,25 @@ Aşağıda her bir Python script'inin detayları, kullandığı veri setleri, he
 
 ### 4. `src/evaluation/evaulatecontextprecision.py`
 
-*   **Açıklama:** Bu script, geri getirilen bağlamın ne kadarının gerçekten ilgili ve soruya yanıt vermek için gerekli olduğunu değerlendirir. İki farklı yaklaşımla ölçüm yapar: referanslı ve referanssız.
-*   **Veri Seti:** `data/raw/ragas_ready_dataset_v2.csv`
+*   **Açıklama:** Bu script, geri getirilen bağlamın ne kadarının gerçekten ilgili ve soruya yanıt vermek için gerekli olduğunu değerlendirir. İki farklı yaklaşımla ölçüm yapar: referanslı ve referanssız. Boş response değerleri olan satırlar atlanır.
+*   **Veri Seti:** `data/raw/ragas_ready_dataset_with_responses_UPDATED.csv`
 *   **Kullanılan Metrikler (Ragas):**
     *   `LLMContextPrecisionWithReference`: LLM kullanarak, geri getirilen bağlamdaki cümlelerin, bir referans yanıt (ground truth) verildiğinde soruya ne kadar odaklı ve gürültüsüz olduğunu ölçer. (Değer Aralığı: Genellikle 0-1)
     *   `LLMContextPrecisionWithoutReference`: LLM kullanarak, geri getirilen bağlamdaki cümlelerin, bir referans yanıt olmadan, sadece soruya göre ne kadar odaklı ve gürültüsüz olduğunu ölçer. (Değer Aralığı: Genellikle 0-1)
-*   **Sonuç Dosyası:** `data/processed/context_precision_results.csv`
-    *   Her örnek için `llm_context_precision_with_reference` ve `llm_context_precision_without_reference` skorlarını içerir.
+*   **Sonuç Dosyaları:**
+    *   `context_precision_normal.csv` (Proje kök dizini)
+    *   `context_precision_noexec.csv` (Proje kök dizini)
+    *   `context_precision_noseverity.csv` (Proje kök dizini)
+    *   Her dosya, ilgili response türü için `llm_context_precision_with_reference` ve `llm_context_precision_without_reference` skorlarını içerir.
 *   **Önemli Fonksiyonlar:**
+    *   `pd.read_csv()`: Veri setini yükler.
+    *   `pd.isna()`: Boş değerleri kontrol eder.
     *   `ast.literal_eval()`: `retrieved_contexts` sütununu işler.
     *   `EvaluationDataset.from_list()`
     *   `evaluate()`
-    *   `results.to_pandas()` ve `df.to_csv()`
-*   **LLM:** `gpt-4o`
+    *   `results.to_pandas()` ve `df.to_csv(..., mode='a', ...)`: Sonuçları CSV'ye yazar (append modu kullanılır).
+    *   Batch işleme ve bekleme süresi (`BATCH_SIZE`, `WAIT_TIME`, `time.sleep`).
+*   **LLM:** `gpt-3.5-turbo` (LangchainLLMWrapper ve Langfuse CallbackHandler aracılığıyla entegre edilmiştir).
 
 ---
 
@@ -199,8 +216,8 @@ Aşağıda her bir Python script'inin detayları, kullandığı veri setleri, he
 *   **Veri Seti:** `data/raw/ragas_ready_dataset_v2.csv`
 *   **Kullanılan Metrikler (Ragas):**
     *   `AspectCritic (name="priority_accuracy")`:
-        *   **Tanım:** "Test caseleri için üç öncelik seviyesi vardır: P1 (Yüksek Öncelik - Kritik, temel iş mantığını kapsayan testler), P2 (Orta Öncelik - Önemli, ancak akışları kesmeyenler), P3 (Düşük Öncelik - Küçük sorunlar, UI cilası veya uç durumlar). Atanan önceliğin (P1/P2/P3) her test case'i için uygun olup olmadığını değerlendirin."
-        *   **Değer Aralığı:** Muhtemelen bir uygunluk skoru (0-1) veya kategorik bir değerlendirme (örn: Uygun/Uygun Değil gibi). Sonuç CSV'sinden teyit edilmelidir.
+        *   **Tanım:** "Test caseleri için üç öncelik seviyesi vardır: P1 (Yüksek Öncelik - Kritik testler), P2 (Orta Öncelik - Önemli, ancak kırıcı olmayan akışlar), P3 (Düşük Öncelik - Küçük sorunlar, UI veya uç durumlar). Atanan önceliğin (P1/P2/P3) her test case'i için uygun olup olmadığını değerlendirin."
+        *   **Değer Aralığı:** Uygunluk skoru (Genellikle 0-1).
     *   `LLMContextRecall`: (Yukarıda açıklandı)
     *   `Faithfulness`: (Yukarıda açıklandı)
     *   `FactualCorrectness`: Üretilen yanıtın, sağlanan bağlamdaki bilgilere göre olgusal olarak ne kadar doğru olduğunu ölçer. Yüksek skor, daha yüksek olgusal doğruluğu gösterir. (Değer Aralığı: Genellikle 0-1)
@@ -211,26 +228,26 @@ Aşağıda her bir Python script'inin detayları, kullandığı veri setleri, he
     *   `EvaluationDataset.from_list()`
     *   `evaluate()`
     *   `results.to_pandas()` ve `df.to_csv()`
-*   **LLM:** `gpt-4o`
+*   **LLM:** `gpt-4o` (LangchainLLMWrapper aracılığıyla)
 
 ---
 
 ### 6. `src/evaluation/evaulate.py`
 
-*   **Açıklama:** Bu script, `data/raw/test_cases.csv` dosyasındaki test caseleri için özel tanımlı bir "priority_accuracy" metriğini (AspectCritic kullanarak) değerlendirir.
+*   **Açıklama:** Bu script, `data/raw/test_cases.csv` dosyasındaki test caseleri için özel tanımlı bir "priority_accuracy" metriğini (AspectCritic kullanarak) değerlendirir. Langfuse entegrasyonu içerir.
 *   **Veri Seti:** `data/raw/test_cases.csv`
     *   Bu dosyanın `user_input` ve `response` sütunlarını kullanır.
 *   **Kullanılan Metrikler (Ragas):**
     *   `AspectCritic (name="priority_accuracy")`:
-        *   **Tanım:** (Yukarıdaki `evulaterag.py` bölümünde açıklandığı gibi) Test caselerinin öncelik seviyelerinin uygunluğunu değerlendirir.
-        *   **Değer Aralığı:** (Yukarıdaki `evulaterag.py` bölümünde açıklandığı gibi)
-*   **Sonuç Dosyası:** Bu script sonuçları bir CSV dosyasına **kaydetmez**, doğrudan konsola yazdırır.
+        *   **Tanım:** "Test caseleri için üç öncelik seviyesi vardır: P1 (Yüksek Öncelik — Kritik testler), P2 (Orta Öncelik — Önemli, ancak kırıcı olmayan akışlar), P3 (Düşük Öncelik — Küçük sorunlar, UI veya uç durumlar). Atanan önceliğin (P1/P2/P3) her test case'i için uygun olup olmadığını değerlendirin."
+        *   **Değer Aralığı:** Uygunluk skoru (Genellikle 0-1).
+*   **Sonuç Dosyası:** Sonuçları CSV dosyasına **kaydetmez**, doğrudan konsola ve Langfuse'a gönderir.
 *   **Önemli Fonksiyonlar:**
     *   `pd.read_csv()`: Veri setini yükler.
     *   `Dataset.from_dict()` (Hugging Face datasets): Veriyi Ragas için uygun formata dönüştürür.
     *   `evaluate()`: Metriği hesaplar.
     *   `results.to_pandas()`: Sonuçları DataFrame'e çevirir ve `print()` ile konsola basar.
-*   **LLM:** `gpt-4o`
+*   **LLM:** `gpt-4o` (LangchainLLMWrapper ve Langfuse CallbackHandler aracılığıyla entegre edilmiştir).
 
 ## Kurulum ve Çalıştırma
 
@@ -239,23 +256,25 @@ Aşağıda her bir Python script'inin detayları, kullandığı veri setleri, he
     pip install pandas ragas langchain langchain-openai python-dotenv langfuse datasets
     ```
 2.  **Ortam Değişkenleri:**
-    Proje kök dizininde bir `.env` dosyası oluşturun ve OpenAI API anahtarınızı ekleyin:
+    Proje kök dizininde bir `.env` dosyası oluşturun veya güncelleyin ve OpenAI API anahtarınız ile Langfuse key'lerinizi ekleyin:
     ```
     OPENAI_API_KEY="sk-YOUR_API_KEY"
-    LANGFUSE_PUBLIC_KEY="pk-lf-..." # Eğer Langfuse kullanılıyorsa
-    LANGFUSE_SECRET_KEY="sk-lf-..." # Eğer Langfuse kullanılıyorsa
+    LANGFUSE_PUBLIC_KEY="pk-lf-YOUR_PUBLIC_KEY"
+    LANGFUSE_SECRET_KEY="sk-lf-YOUR_SECRET_KEY"
+    LANGFUSE_HOST="https://cloud.langfuse.com" # Genellikle bu adres kullanılır
     ```
+    API anahtarlarınızı ve Langfuse key'lerinizi kendi hesaplarınızdan almalısınız.
 3.  **Veri Setleri:**
-    *   Gerekli ham CSV dosyalarının (`ragas_ready_dataset_v2.csv`, `ragas_ready_dataset_v4.csv`, `test_cases.csv`) `data/raw/` klasöründe bulunduğundan emin olun.
-    *   `ContextEntityRecall .py` script'i çalıştırıldığında `data/processed/ragas_ready_dataset_v6.csv` dosyasını üretecektir.
-4.  **Script'leri Çalıştırma:**
-    İlgili Python script'ini doğrudan çalıştırabilirsiniz:
+    *   Gerekli ham CSV dosyalarının (`ragas_ready_dataset_v2.csv`, `ragas_ready_dataset_v4.csv`, `test_cases.csv`, `ragas_ready_dataset_with_responses_UPDATED.csv`) `data/raw/` klasöründe bulunduğundan emin olun.
+    *   `ContextEntityRecall .py` script'i çalıştırıldığında `data/processed/ragas_ready_dataset_v6.csv` adlı ara bir işlenmiş veri dosyası üretecektir.
+4.  **Scriptleri Çalıştırma:**
+    İstediğiniz değerlendirme scriptini terminalden çalıştırın. Örneğin:
     ```bash
-    python src/evaluation/EvaluateNoiseFaithRelevancy.py
-    python src/evaluation/ContextEntityRecall .py
-    # vb. diğer scriptler için
+    python src/evaluation/evaulatecontextprecision.py
+    python src/evaluation/evaulate.py
+    # Diğer scriptler için de benzer komutlar kullanılabilir
     ```
-    Sonuçlar, script'in içinde belirtilen CSV dosyalarına (veya `evaulate.py` durumunda konsola) yazdırılacaktır.
+    Scriptler tamamlandığında, sonuç CSV dosyaları belirtilen konumlarda (genellikle `data/processed/` veya projenin kök dizini) bulunacaktır. Langfuse entegrasyonu olan scriptler çalışırken, Langfuse dashboard'unuzda LLM çağrılarını takip edebilirsiniz.
 
 ## Metriklerin Değer Aralıkları ve Anlamları
 
@@ -288,7 +307,7 @@ Aşağıda, bu projeyi kullanırken karşılaşabileceğiniz bazı yaygın sorun
 3.  **Veri Dosyası Bulunamadı Hatası (FileNotFoundError):**
     *   **Sorun:** `FileNotFoundError: [Errno 2] No such file or directory: 'data/raw/ragas_ready_dataset_v2.csv'` gibi hatalar.
     *   **Çözüm:**
-        *   Script'lerin beklediği CSV dosyalarının (`ragas_ready_dataset_v2.csv`, `ragas_ready_dataset_v4.csv`, `test_cases.csv`) doğru yolda (`data/raw/` klasörü altında) bulunduğundan emin olun.
+        *   Script'lerin beklediği CSV dosyalarının (`ragas_ready_dataset_v2.csv`, `ragas_ready_dataset_v4.csv`, `test_cases.csv`, `ragas_ready_dataset_with_responses_UPDATED.csv`) doğru yolda (`data/raw/` klasörü altında) bulunduğundan emin olun.
         *   Dosya adlarının script'lerde belirtilenlerle tam olarak eşleştiğini kontrol edin (büyük/küçük harf duyarlılığına dikkat edin).
 
 4.  **Veri Formatı Hataları (örn: `ast.literal_eval` veya `json.loads` hataları):**
@@ -317,7 +336,7 @@ Bu listede olmayan bir sorunla karşılaşırsanız, hatanın tam metnini ve han
 
 Bu bölümde, projede kullanılan `ragas` metriklerinin ne anlama geldiği, hangi değer aralıklarında sonuçlar ürettiği ve bu sonuçların nasıl yorumlanabileceği üzerine daha detaylı bilgiler sunulmaktadır. **Not:** Aşağıdaki CSV çıktı örnekleri varsayımsaldır ve metriklerin tipik yapılarını göstermek amaçlıdır. Gerçek çıktılar, kullanılan verilere ve LLM yanıtlarına göre değişiklik gösterecektir.
 
-Çoğu `ragas` metriği (örneğin `Faithfulness`, `ResponseRelevancy`, `ContextRecall`, `ContextPrecision`, `FactualCorrectness`, `NoiseSensitivity`, `ContextEntityRecall`) genellikle **0 ile 1 arasında** bir skor üretir.
+Çoğu `ragas` metriği (örneğin `Faithfulness`, `ResponseRelevancy`, `ContextRecall`, `ContextPrecision`, `FactualCorrectness`, `NoiseSensitivity`) genellikle **0 ile 1 arasında** bir skor üretir.
 *   **1'e yakın skorlar** genellikle daha iyi performansı gösterir (daha yüksek sadakat, alaka düzeyi, hatırlama, kesinlik, olgusal doğruluk veya gürültüye karşı daha iyi direnç).
 *   **0'a yakın skorlar** ise genellikle daha düşük performansı gösterir.
 
